@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  nextjs-app:
+    build: .
+    container_name: java-spring-car-manager
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - nextjs-cache:/app/.next/cache
+    restart: unless-stopped
+    networks:
+      - app-network
+
+volumes:
+  nextjs-cache:
+
+networks:
+  app-network:
+    driver: bridge

@@ -1,12 +1,15 @@
 package com.example.car_manager_system.service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
 import com.example.car_manager_system.model.Car;
 import com.example.car_manager_system.repository.CarRepository;
+
+
+import com.example.car_manager_system.exceptions.ResourceNotFoundException;
 
 
 @Service
@@ -20,11 +23,15 @@ public class CarService {
     public List<Car> listCarsById(){
         return carRepository.findAll();
     }
-    public void deleteCarById(Long id){
+    public void deleteCarById(UUID id){
+        if(!carRepository.existsById(id)){
+            throw new ResourceNotFoundException("The car id:" + id + "cannot be deleted. \n" + "Reason: id not found.");
+        }
         carRepository.deleteById(id);
     }
-    public Optional<Car> searchCarById(Long id){
-        return carRepository.findById(id);
+    public Car searchCarById(UUID id){
+        return carRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Car " + id + "not found."));
     }
     public Car saveCar(Car car){
         return carRepository.save(car);

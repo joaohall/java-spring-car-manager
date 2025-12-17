@@ -1,27 +1,32 @@
 package com.example.car_manager_system.model;
 
+import java.util.UUID;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+/* no lombok! */
 @Entity
 @Table(name = "Car")
 public class Car {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy= GenerationType.SEQUENCE)
+    private UUID id;
 
     private String name;
+
     private String model;
+
     private Double price;
 
-    public Long getId() {
+    public UUID getId() {
         return this.id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -55,6 +60,7 @@ public class Car {
         this.model = model;
         this.price = price;
     }
+
 
 
 }
